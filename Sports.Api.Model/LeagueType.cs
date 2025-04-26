@@ -1,5 +1,9 @@
 ﻿namespace Sports.Api.Model;
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+[JsonConverter(typeof(StringEnumConverter))]
 public enum LeagueType
 {
     None = 0,

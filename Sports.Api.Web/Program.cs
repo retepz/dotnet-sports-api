@@ -32,7 +32,8 @@ public class Program
         builder
             .Services
             .AddFastEndpoints()
-            .SwaggerDocument();
+            .SwaggerDocument()
+            .AddCors();
 
         builder
             .Services
@@ -42,7 +43,8 @@ public class Program
 
         app
             .UseFastEndpoints()
-            .UseSwaggerGen();
+            .UseSwaggerGen()
+            .UseCors(corsBuilder => corsBuilder.WithOrigins("http://localhost:5173"));
 
         app.Run();
     }
