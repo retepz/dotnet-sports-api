@@ -44,7 +44,9 @@ public class Program
         app
             .UseFastEndpoints()
             .UseSwaggerGen()
-            .UseCors(corsBuilder => corsBuilder.WithOrigins("http://localhost:5173"));
+            .UseCors(corsBuilder => corsBuilder
+                // TODO: Retrieve these from configs
+                .WithOrigins("http://localhost:5173", "https://happy-dune-03c77230f.6.azurestaticapps.net"));
 
         app.Run();
     }
