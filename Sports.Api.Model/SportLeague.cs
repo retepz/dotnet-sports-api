@@ -1,6 +1,7 @@
 ﻿namespace Sports.Api.Model;
 
 using Sports.Api.Model.Espn;
+using System.Text.Json.Serialization;
 
 public sealed record SportLeague
 {
@@ -19,6 +20,8 @@ public sealed record SportLeague
     }
 
     public string? Id { get; }
+
+    [JsonConverter(typeof(JsonStringEnumConverter))]
 
     public LeagueType LeagueType { get; }
 

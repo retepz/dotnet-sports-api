@@ -10,7 +10,7 @@ public class GetLeagueSeasonEndpoint(IGetSportLeagueService getSportLeagueServic
 {
     public override void Configure()
     {
-        Get("/api/league/{leagueType}/season");
+        Get("/api/leagues/{leagueType}/season");
         AllowAnonymous();
     }
 

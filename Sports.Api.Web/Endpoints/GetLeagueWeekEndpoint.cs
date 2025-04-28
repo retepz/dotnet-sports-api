@@ -10,7 +10,7 @@ public class GetLeagueWeekEndpoint(IGetSportLeagueService getSportLeagueService)
 {
     public override void Configure()
     {
-        Get("/api/league/{leagueType}/season/currentweek");
+        Get("/api/leagues/{leagueType}/season/currentweek");
         AllowAnonymous();
     }
 
