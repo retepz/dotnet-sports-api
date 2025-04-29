@@ -6,6 +6,10 @@ using Sports.Api.Service.Interface.Espn;
 using Sports.Api.Service.Interface;
 using Sports.Api.Service;
 using FastEndpoints.Swagger;
+using Microsoft.AspNetCore.ResponseCompression;
+using System.IO.Compression;
+using Microsoft.Extensions.Options;
+using Sports.Api.Web.Config;
 
 public class Program
 {
@@ -37,16 +41,28 @@ public class Program
 
         builder
             .Services
-            .AddMemoryCache();
+            .AddMemoryCache()
+            .AddResponseCompression(options =>
+            {
+                options.Providers.Add<GzipCompressionProvider>();
+            })
+            .Configure<GzipCompressionProviderOptions>(options => 
+            {
+                options.Level = CompressionLevel.Optimal;
+            });
 
         var app = builder.Build();
+        
+        var corsConfig = builder
+            .Configuration
+            .GetRequiredSection("Cors")
+            .Get<CorsConfig>()!;
 
         app
             .UseFastEndpoints()
             .UseSwaggerGen()
-            .UseCors(corsBuilder => corsBuilder
-                // TODO: Retrieve these from configs
-                .WithOrigins("http://localhost:5173", "https://happy-dune-03c77230f.6.azurestaticapps.net"));
+            .UseResponseCompression()
+            .UseCors(corsBuilder => corsBuilder.WithOrigins(corsConfig.AllowedOrigins));
 
         app.Run();
     }
