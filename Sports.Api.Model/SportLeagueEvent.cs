@@ -9,8 +9,8 @@ public class SportLeagueEvent
     {
         var espnCompetition = espnEvent?.Competition;
 
-        EspnCompetitor firstApiCompetitor = espnCompetition?.FirstCompetitor!;
-        EspnCompetitor secondApiCompetitor = espnCompetition?.SecondCompetitior!;
+        var firstApiCompetitor = espnCompetition?.FirstCompetitor!;
+        var secondApiCompetitor = espnCompetition?.SecondCompetitior!;
 
         Id = espnCompetition?.Id;
         FirstTeam = new(espnCompetition, firstApiCompetitor, espnEvent!.LeagueType);
@@ -19,16 +19,8 @@ public class SportLeagueEvent
         IsFinished = espnCompetition?.CurrentStatus?.IsCompleted ?? false;
         IsInFuture = espnCompetition?.CurrentStatus?.IsInFuture ?? false;
         GameTime = espnCompetition?.Date;
-
-        QuarterDisplay = (IsLive
-        ? espnCompetition?.CurrentStatus.StatusType.ShortDetail
-        : DateTimeHelper.GetGameDateDisplay(GameTime)) ?? string.Empty;
-
-        GameTimeDisplay = (IsInFuture
-        ? DateTimeHelper.GameTimeDisplay(GameTime)
-        : IsLive
-        ? espnCompetition?.CurrentSituation?.DownDistanceText
-        : "Final") ?? string.Empty;
+        StatusType = espnCompetition?.CurrentStatus?.StatusType?.ShortDetail;
+        DownDistance = espnCompetition?.CurrentSituation?.DownDistanceText;
 
         BroadcastStations = espnCompetition?
             .CurrentBroadcast?
@@ -41,10 +33,10 @@ public class SportLeagueEvent
     public SportCompetitor FirstTeam { get; }
     public SportCompetitor SecondTeam { get; }
     public DateTime? GameTime { get; }
-    public string? QuarterDisplay { get; }
-    public string? GameTimeDisplay { get; }
     public bool IsFinished { get; }
     public bool IsInFuture { get; }
     public bool IsLive { get; }
+    public string? StatusType { get; }
+    public string? DownDistance { get; }
     public string[]? BroadcastStations { get; }
 }
