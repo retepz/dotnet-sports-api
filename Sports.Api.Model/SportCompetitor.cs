@@ -3,9 +3,9 @@
 using Sports.Api.Model.Espn;
 using System;
 
-public class SportMatch
+public class SportCompetitor
 {
-    public SportMatch(
+    public SportCompetitor(
         EspnCompetition? espnCompetition,
         EspnCompetitor? espnCompetitor,
         LeagueType leagueType)

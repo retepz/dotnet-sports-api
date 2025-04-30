@@ -12,6 +12,7 @@ public class SportLeagueEvent
         EspnCompetitor firstApiCompetitor = espnCompetition?.FirstCompetitor!;
         EspnCompetitor secondApiCompetitor = espnCompetition?.SecondCompetitior!;
 
+        Id = espnCompetition?.Id;
         FirstTeam = new(espnCompetition, firstApiCompetitor, espnEvent!.LeagueType);
         SecondTeam = new(espnCompetition, secondApiCompetitor, espnEvent.LeagueType);
         IsLive = espnCompetition?.CurrentStatus?.IsInProgress ?? false;
@@ -36,8 +37,9 @@ public class SportLeagueEvent
             .ToArray()!;
     }
 
-    public SportMatch FirstTeam { get; }
-    public SportMatch SecondTeam { get; }
+    public string? Id { get; }
+    public SportCompetitor FirstTeam { get; }
+    public SportCompetitor SecondTeam { get; }
     public DateTime? GameTime { get; }
     public string? QuarterDisplay { get; }
     public string? GameTimeDisplay { get; }
