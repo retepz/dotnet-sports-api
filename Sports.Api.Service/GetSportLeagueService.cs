@@ -90,6 +90,42 @@ public sealed class GetSportLeagueService(
         return new(espnWeek);
     }
 
+    public async Task<SportLeagueEvent[]?> GetWeekEvents(LeagueType leagueType)
+    {
+        var sportType = _leagueSportMap[leagueType];
+        var espnLeagues = await GetEspnLeagues(sportType);
+        if (espnLeagues == null)
+        {
+            return null;
+        }
+
+        var espnLeague = espnLeagues.SingleOrDefault(l => l.LeagueType == leagueType);
+        if (espnLeague == null)
+        {
+            return null;
+        }
+
+        var espnSeason = await espnLeagueService.GetCurrentSeason(espnLeague);
+        if (espnSeason == null || espnSeason.IsOffSeason)
+        {
+            return null;
+        }
+
+        var espnWeek = await espnLeagueService.GetCurrentWeek(espnLeague, espnSeason);
+        if (espnWeek == null)
+        {
+            return null;
+        }
+
+        var (_, espnWeekEvents) = await espnLeagueService.GetWeekEvents(espnLeague, espnSeason, espnWeek);
+        if(espnWeekEvents == null)
+        {
+            return null;
+        }
+
+        return [.. espnWeekEvents.Select(we => new SportLeagueEvent(we))];
+    }
+
     private async Task<IList<EspnLeague>?> GetEspnLeagues(SportType sportType)
     {
         var espnSport = await espnSportService.Get(sportType);
