@@ -40,4 +40,4 @@ Follow these steps to set up the development environment:
    - Press `F5` or navigate to **Debug** -> **Start Debugging** to run the application.
 
 ## Running the Application
-- The application will automatically open (swagger)[https://swagger.io/] on the default local server (http://localhost:5094/swagger)[http://localhost:5094/swagger].
+- The application will automatically open [swagger](https://swagger.io/) on the default local server [http://localhost:5094/swagger](http://localhost:5094/swagger).
